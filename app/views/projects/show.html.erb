@@ -1,0 +1,15 @@
+<div class="jumbotron">
+  <h1>Title: <%=@project.title%></h1>
+  <p>Description: <%=@project.description%></p>
+</div>
+
+<div class="jumbotron">
+  <h3>Members </h3>
+  <ul>
+  <% @users.each do |user|%>
+      <li><%= user.name %> | <%= user.user_type%></li>
+  <%end%>
+  </ul>
+</div>
+
+<%= link_to 'Back', projects_path ,class: "btn btn-primary" %>

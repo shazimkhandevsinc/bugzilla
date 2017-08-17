@@ -1,0 +1,18 @@
+
+<%= simple_form_for [@project,@bug] do |f| %>
+
+<%= f.input :title %>
+<%= f.input :deadline, as: :date, start_year: Date.today.year ,end_year: Date.today.year + 10, order: [:day ,:month, :year]%>
+<%= f.input :bug_type, label: 'Select Type', collection: [ ['Feature', 'Feature' ], ['Bug', 'Bug'] ], as: :radio_buttons, label_method: :last, value_method: :first, checked: @bug.bug_type, item_wrapper_class: 'inline'%>
+
+<%= f.input :status ,include_blank: false, include_hidden: false, collection: ["New" , "Started" , "Completed"] %>
+
+<%= f.file_field :screenshot ,id: "screenshot-upload"  %>
+
+<br>
+
+<img id="screenshot_prev" width=100 height=100 src="#" alt="your image" class="img-thumbnail hidden"/> <br/>
+
+<%= f.button :submit %>
+<br><br>
+<% end %>

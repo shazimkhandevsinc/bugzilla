@@ -1,0 +1,7 @@
+<%= simple_form_for @project do |f| %>
+  <%= f.input :title %>
+  <%= f.input :description, as: :text %>
+  <%= f.association :users, :include_blank => false, as: :check_boxes, :collection => @user_list, :label_method => lambda { |user| "#{user.name} | #{user.user_type}" }%>
+  <%= f.button :submit %>
+  <br><br>
+<% end %>

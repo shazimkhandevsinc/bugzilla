@@ -1,0 +1,44 @@
+
+
+<div class="jumbotron">
+  <h3 class="pull-left">Welcome: <%=current_user.name%>   |   <%=current_user.user_type%></h3>
+  <%if policy(Project).new? %>
+    <%= link_to "Create new project", new_project_path , class: "btn btn-primary btn-lg pull-right" %>
+  <%end%>
+  <div class="clearfix"></div>
+</div>
+
+<%  @projects.each  do  |project| %>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+    <div class="thumbnail">
+      <div class="caption">
+
+        <div class='col-lg-12'>
+
+            <%= link_to 'Show Bugs', project_bugs_path(project) ,class: "btn btn-warning pull-right btn-update btn-add-card" %>
+
+
+        </div>
+        <div class="row"></div>
+        <br>
+
+        <div class='col-lg-12 well well-add-card'>
+          <h4><%= project.title %></h4>
+        </div>
+
+        <div class='col-lg-12'>
+          <p><%= project.description %></p>
+        </div>
+        <%if policy(Project).edit?  && policy(project).can_edit? %>
+        <%= link_to 'Edit', edit_project_path(project) ,class: "btn btn-success btn-update btn-add-card" %>
+        <%end%>
+        <%= link_to 'Show', project_path(project) ,class: "btn btn-primary btn-update btn-add-card" %>
+        <%if policy(Project).update? && policy(project).can_update?%>
+        <%= link_to 'Delete', project ,  method: :delete,  data: { confirm: 'Are you sure to delete ?'  } ,class: "btn btn-danger btn-update btn-add-card" %>
+        <%end%>
+      </div>
+    </div>
+  </div>
+<%  end %>
+
+

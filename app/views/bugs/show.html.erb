@@ -1,0 +1,13 @@
+<div class="jumbotron">
+  <h1>Title: <%=@bug.title%></h1>
+  <p>Deadline: <%=@bug.deadline%></p>
+  <p>Type: <%=@bug.bug_type%></p>
+  <p>Status: <%=@bug.status%></p>
+  <p>Created by: <%=@user.name%></p>
+</div>
+
+<div class="jumbotron">
+  <img src=<%=@bug.screenshot%> class="img-rounded" alt="Cinque Terre" width="200" height="200">
+</div>
+
+<%= link_to 'Back', project_bugs_path ,class: "btn btn-primary" %>

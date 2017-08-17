@@ -1,0 +1,75 @@
+<div class="jumbotron">
+  <h1>Title: <%=@project.title%></h1>
+  <p>Description: <%=@project.description%></p>
+  <%if policy(Bug).new?%>
+  <%= link_to "Create new Bug", new_project_bug_path(@project) , class: "btn btn-primary btn-lg pull-right" %>
+  <%end%>
+</div>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Deadline</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Screenshot</th>
+        <th>Assign To</th>
+        <th>Action</th>
+        <%if policy(Bug).edit?%>
+        <th>Action</th>
+        <%end%>
+        <%if policy(Bug).destroy?%>
+        <th>Action</th>
+        <%end%>
+        <th>Resolved</th>
+      </tr>
+    </thead>
+    <tbody>
+    <%  @bugs.each  do  |bug| %>
+      <tr>
+        <td><%=bug.title%></td>
+        <td><%=bug.deadline%></td>
+        <td><%=bug.bug_type%></td>
+        <td id="status_<%="#{bug.id}"%>"><%=bug.status%></td>
+        <td><img src=<%=bug.screenshot%> class="img-rounded" alt="Cinque Terre" width="50" height="50"></td>
+        <%if current_user.user_type == "QA"%>
+
+        <td><%=bug.assign_to%></td>
+
+        <%elsif current_user.user_type == "Developer" %>
+          <td id="assign_name_<%="#{bug.id}"%>" >
+            <%if bug.assign_to? %>
+              <%=bug.assign_to%>
+            <%else%>
+             <%= link_to "Assign Me", '#', :onclick => "Assign_function(#{@project.id},#{bug.id})", class: "btn btn-primary" %>
+             <%end%>
+          </td>
+
+
+        <%end%>
+
+        <td><%= link_to 'Show', project_bug_path(@project,bug) ,class: "btn btn-primary" %></td>
+        <%if policy(Bug).edit?%>
+        <td><%= link_to 'Edit', edit_project_bug_path(@project,bug), class: "btn btn-info" %></td>
+        <%end%>
+        <%if policy(Bug).destroy?%>
+        <td><%= link_to 'Delete', [@project,bug] ,  method: :delete,  data: { confirm: 'Are you sure to delete ?'  } ,class: "btn btn-danger" %></td>
+        <%end%>
+
+        <td id="completed_name_<%="#{bug.id}"%>">
+
+          <%if bug.status == "Started" && current_user.user_type == "Developer" %>
+            <%= link_to "Marked Complete", '#', :onclick => "complete_function(#{@project.id},#{bug.id})", class: "btn btn-info" %>
+          <%else%>
+
+             <%end%>
+        </td>
+      </tr>
+      <%end%>
+    </tbody>
+
+</table>
+
+
+
